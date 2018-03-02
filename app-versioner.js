@@ -9,7 +9,7 @@ const NS = "AppVersioner";
 const DEF_PKG_PATH = './package.json';
 
 
-function removeTrainlingSlash(path) {
+function removeTrailingSlash(path) {
 	if (path.substr(path.length - 1) === "/") path = path.substr(0, path.length - 1);
 	return path;
 }
@@ -186,7 +186,7 @@ export class AppVersioner {
       srcPath = src.indexOf("/") === -1 ? src : src.slice( src.lastIndexOf("/") + 1 );
     } else if(fs.lstatSync(src).isDirectory()) {
       console.log(src, "1")
-      src = removeTrainlingSlash(src);
+      src = removeTrailingSlash(src);
       console.log(src, "2")
       srcPath = src.slice( src.lastIndexOf("/") + 1 );
     }
