@@ -2,17 +2,11 @@ const fs = require('fs-extra')
   , globby = require('globby')
   , semver = require("semver")
   , stripJsonComments = require('strip-json-comments')
-  , slash = require('slash')
-  , changeCase = require('change-case')
+  , slash = require('slash');
   
 const NS = "AppVersioner";
 const DEF_PKG_PATH = './package.json';
 
-
-function removeTrailingSlash(path) {
-	if (path.substr(path.length - 1) === "/") path = path.substr(0, path.length - 1);
-	return path;
-}
 
 export class AppVersioner {
 
@@ -73,7 +67,10 @@ export class AppVersioner {
   }
 
 
-
+  static removeTrailingSlash(path) {
+    if (path.substr(path.length - 1) === "/") path = path.substr(0, path.length - 1);
+    return path;
+  }
 
 
   /**
@@ -185,9 +182,7 @@ export class AppVersioner {
     if(fs.lstatSync(src).isFile()) {
       srcPath = src.indexOf("/") === -1 ? src : src.slice( src.lastIndexOf("/") + 1 );
     } else if(fs.lstatSync(src).isDirectory()) {
-      console.log(src, "1")
-      src = removeTrailingSlash(src);
-      console.log(src, "2")
+      src = AppVersioner.removeTrailingSlash(src);
       srcPath = src.slice( src.lastIndexOf("/") + 1 );
     }
 

@@ -1,8 +1,8 @@
 {
   "name": "app-versioner",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Helper for adding versioning to you app",
-  "main": "app-versioner.js",
+  "main": "dist/app-versioner.js",
   "scripts": {
     "start": "./node_modules/.bin/babel app-versioner.js -o dist/app-versioner.js",
     "watch": "./node_modules/.bin/babel app-versioner.js -o dist/app-versioner.js -w",
@@ -14,7 +14,6 @@
   "author": "Jim Doyle",
   "license": "ISC",
   "dependencies": {
-    "change-case": "^3.0.2",
     "fs-extra": "^5.0.0",
     "globby": "^8.0.1",
     "jasmine-node": "^1.14.5",

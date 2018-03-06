@@ -6,7 +6,7 @@ const FAKE_PKG1 = `${TEST_RES}fake-package-1.json`;
 const FAKE_PKG2 = `${TEST_RES}fake-package-2.json`;
 
 afterEach(() => {
-    // fs.removeSync(TEST_RES_TEMP);
+    fs.removeSync(TEST_RES_TEMP);
 });
 
 describe("package.json manipulation", () => {
@@ -39,6 +39,11 @@ describe("utils", () => {
 
         expect( AV.regSlash("a?b") ).toBe('a\\?b');
         expect( AV.regSlash("a*b") ).toBe('a\\*b');
+    });
+
+    it("should remove the trailing slash from a url when there is one", () => {
+        expect( AV.removeTrailingSlash("/a/b/") ).toBe("/a/b");
+        expect( AV.removeTrailingSlash("/a/b") ).toBe("/a/b");
     });
 });
 
