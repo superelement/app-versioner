@@ -104,10 +104,9 @@ export class AppVersioner {
   }
 
   /**
-   * Returns whether or not you are in production mode
+   * Returns whether or not you are in production mode (true for prod)
    */
-  isProd() {
-    //return true;
+  getEnvironment() {
     return this.isProd;
   }
 

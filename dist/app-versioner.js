@@ -147,13 +147,12 @@ var AppVersioner = exports.AppVersioner = function () {
     }
 
     /**
-     * Returns whether or not you are in production mode
+     * Returns whether or not you are in production mode (true for prod)
      */
 
   }, {
-    key: 'isProd',
-    value: function isProd() {
-      //return true;
+    key: 'getEnvironment',
+    value: function getEnvironment() {
       return this.isProd;
     }
 
