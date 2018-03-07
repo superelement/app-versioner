@@ -68,7 +68,7 @@ describe("path retrieval", () => {
     it("should use 'setScssBuildPath' to set the build path as an AUTOMATIC variable in a scss file, adding comments in AUTOMATICALLY because they are not there already", () => {
         let outputPath = TEST_RES_TEMP + "setScssBuildPath1-dev.scss";
         
-        inst.setScssBuildPath(DEV_SCSS, outputPath, FAKE_PKG2);
+        inst.setScssBuildPath(DEV_SCSS, true, outputPath, FAKE_PKG2);
 
         expect( fs.existsSync(outputPath) ).toBe(true);
 
@@ -81,7 +81,7 @@ describe("path retrieval", () => {
     it("should use 'setScssBuildPath' to set the build path as a CUSTOM variable in a scss file, using CUSTOM comments and adding them AUTOMATICALLY if they are not already there", () => {
         let outputPath = TEST_RES_TEMP + "setScssBuildPath2-dev.scss";
         
-        inst.setScssBuildPath(DEV_SCSS, outputPath, FAKE_PKG2, '$myBuild', "//BUILD_PATH_START", "//BUILD_PATH_END");
+        inst.setScssBuildPath(DEV_SCSS, true, outputPath, FAKE_PKG2, '$myBuild', "//BUILD_PATH_START", "//BUILD_PATH_END");
 
         expect( fs.existsSync(outputPath) ).toBe(true);
 
@@ -89,6 +89,17 @@ describe("path retrieval", () => {
         expect( scssContents.indexOf('$myBuild: "/dist/2-0-0/";') ).not.toEqual(-1);
         expect( scssContents.indexOf('//BUILD_PATH_START') ).not.toEqual(-1);
         expect( scssContents.indexOf('//BUILD_PATH_END') ).not.toEqual(-1);
+    });
+
+    it("should use 'setScssBuildPath' to set the build path as an AUTOMATIC variable in a scss file WITHOUT versioning", () => {
+        let outputPath = TEST_RES_TEMP + "setScssBuildPath1-dev.scss";
+        const includeVersioning = false;
+        inst.setScssBuildPath(DEV_SCSS, includeVersioning, outputPath, FAKE_PKG2);
+
+        expect( fs.existsSync(outputPath) ).toBe(true);
+
+        let scssContents = fs.readFileSync(outputPath).toString();
+        expect( scssContents.indexOf('$build-path: "/dist/";') ).not.toEqual(-1);
     });
 
 

@@ -137,15 +137,16 @@ export class AppVersioner {
   /**
    * Adds a variable for the build path to a scss file between specified comments. These comments will be added to top of file if not found.
    * @param {string} scssPath - path to scss file to add variable to
+   * @param {boolean} includeVersioning - whether to not to include versioned folder (eg "/dist/0-6-25/"). Defaults to true.
    * @param {string} outputFilePath - alternative path. Should usually be null, so it saves over the original, but you may want to change it when testing.
    * @param {string} pkgPath - path to 'package.json'. Defaults to './package.json'
    * @param {string} varName - a valid scss variable name. Defaults to '$build-path'.
    * @param {string} startComment - a start comment. Defaults to '//APP_VERSIONER_BUILD_PATH_START'
    * @param {string} endComment - an end comment. Defaults to '//APP_VERSIONER_BUILD_PATH_END'
    */
-  setScssBuildPath(scssPath, outputFilePath, pkgPath = DEF_PKG_PATH, varName = "$build-path", startComment = "//APP_VERSIONER_BUILD_PATH_START", endComment = "//APP_VERSIONER_BUILD_PATH_END") {
+  setScssBuildPath(scssPath, includeVersioning = true, outputFilePath, pkgPath = DEF_PKG_PATH, varName = "$build-path", startComment = "//APP_VERSIONER_BUILD_PATH_START", endComment = "//APP_VERSIONER_BUILD_PATH_END") {
     
-    let varContents = this.getBuildPath(true, false, pkgPath);
+    let varContents = this.getBuildPath(includeVersioning, false, pkgPath);
     this._setScssVariable(scssPath, varName, varContents, startComment, endComment, outputFilePath, pkgPath);
   }
 

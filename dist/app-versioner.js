@@ -195,6 +195,7 @@ var AppVersioner = exports.AppVersioner = function () {
     /**
      * Adds a variable for the build path to a scss file between specified comments. These comments will be added to top of file if not found.
      * @param {string} scssPath - path to scss file to add variable to
+     * @param {boolean} includeVersioning - whether to not to include versioned folder (eg "/dist/0-6-25/"). Defaults to true.
      * @param {string} outputFilePath - alternative path. Should usually be null, so it saves over the original, but you may want to change it when testing.
      * @param {string} pkgPath - path to 'package.json'. Defaults to './package.json'
      * @param {string} varName - a valid scss variable name. Defaults to '$build-path'.
@@ -204,14 +205,16 @@ var AppVersioner = exports.AppVersioner = function () {
 
   }, {
     key: 'setScssBuildPath',
-    value: function setScssBuildPath(scssPath, outputFilePath) {
-      var pkgPath = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : DEF_PKG_PATH;
-      var varName = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "$build-path";
-      var startComment = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : "//APP_VERSIONER_BUILD_PATH_START";
-      var endComment = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "//APP_VERSIONER_BUILD_PATH_END";
+    value: function setScssBuildPath(scssPath) {
+      var includeVersioning = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      var outputFilePath = arguments[2];
+      var pkgPath = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : DEF_PKG_PATH;
+      var varName = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : "$build-path";
+      var startComment = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "//APP_VERSIONER_BUILD_PATH_START";
+      var endComment = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : "//APP_VERSIONER_BUILD_PATH_END";
 
 
-      var varContents = this.getBuildPath(true, false, pkgPath);
+      var varContents = this.getBuildPath(includeVersioning, false, pkgPath);
       this._setScssVariable(scssPath, varName, varContents, startComment, endComment, outputFilePath, pkgPath);
     }
 
