@@ -240,6 +240,7 @@ var AppVersioner = exports.AppVersioner = function () {
     /**
      * Copies a file for folder into the build directory. Defaults to include versioned folder in path.
      * @param {*} src - file or folder to copy
+     * @param {boolean} includeSrcDir - whether to not to include directory name provided in 'src' in the output. Only works when 'src' is a directory. Defaults to false.
      * @param {boolean} includeVersioning - whether to not to include versioned folder (eg "/dist/0-6-25/"). Defaults to true.
      * @param {string} rootPath - optional root path for the output. Defaults to empty.
      * @param {string} pkgPath - path to 'package.json'. Defaults to './package.json'
@@ -249,9 +250,10 @@ var AppVersioner = exports.AppVersioner = function () {
   }, {
     key: 'copyToBuildPath',
     value: function copyToBuildPath(src) {
-      var includeVersioning = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-      var rootPath = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
-      var pkgPath = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : DEF_PKG_PATH;
+      var includeSrcDir = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var includeVersioning = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+      var rootPath = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
+      var pkgPath = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : DEF_PKG_PATH;
 
 
       src = slash(src);
@@ -262,7 +264,7 @@ var AppVersioner = exports.AppVersioner = function () {
         srcPath = src.indexOf("/") === -1 ? src : src.slice(src.lastIndexOf("/") + 1);
       } else if (fs.lstatSync(src).isDirectory()) {
         src = AppVersioner.removeTrailingSlash(src);
-        srcPath = src.slice(src.lastIndexOf("/") + 1);
+        if (includeSrcDir) srcPath = src.slice(src.lastIndexOf("/") + 1);
       }
 
       return fs.copySync(src, rootPath + this.getBuildPath(includeVersioning, false, pkgPath) + srcPath);

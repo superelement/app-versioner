@@ -120,18 +120,25 @@ describe("path retrieval", () => {
     });
 
     it("should use 'copyToBuildPath' to copy a folder into the versioned output build directory", () => {
+        let includeSrcDir = true;
 
-        inst.copyToBuildPath(TEST_RES + "stuff1", true, TEST_RES_TEMP, FAKE_PKG2);
+        inst.copyToBuildPath(TEST_RES + "stuff1", includeSrcDir, true, TEST_RES_TEMP, FAKE_PKG2);
         expect(fs.existsSync(TEST_RES_TEMP+"dist/2-0-0/stuff1")).toBe(true);
 
         // now test with a trailing slash
-        inst.copyToBuildPath(TEST_RES + "stuff2/", true, TEST_RES_TEMP, FAKE_PKG2);
+        inst.copyToBuildPath(TEST_RES + "stuff2/", includeSrcDir, true, TEST_RES_TEMP, FAKE_PKG2);
         expect(fs.existsSync(TEST_RES_TEMP+"dist/2-0-0/stuff2")).toBe(true);
+    });
+
+    it("should use 'copyToBuildPath' to copy a folder into the versioned output build directory, but copy only the contents of the 'src' directory", () => {
+        let includeSrcDir = false;
+        inst.copyToBuildPath(TEST_RES + "stuff1", includeSrcDir, true, TEST_RES_TEMP, FAKE_PKG2);
+        expect(fs.existsSync(TEST_RES_TEMP+"dist/2-0-0/file1.css")).toBe(true);
     });
 
     it("should use 'copyToBuildPath' to copy a single file into the versioned output build directory", () => {
 
-        inst.copyToBuildPath(TEST_RES + "stuff1/file1.css", true, TEST_RES_TEMP, FAKE_PKG2);
+        inst.copyToBuildPath(TEST_RES + "stuff1/file1.css", true, true, TEST_RES_TEMP, FAKE_PKG2);
         expect(fs.existsSync(TEST_RES_TEMP+"dist/2-0-0/file1.css")).toBe(true);
     });
 

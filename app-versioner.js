@@ -168,12 +168,13 @@ export class AppVersioner {
   /**
    * Copies a file for folder into the build directory. Defaults to include versioned folder in path.
    * @param {*} src - file or folder to copy
+   * @param {boolean} includeSrcDir - whether to not to include directory name provided in 'src' in the output. Only works when 'src' is a directory. Defaults to false.
    * @param {boolean} includeVersioning - whether to not to include versioned folder (eg "/dist/0-6-25/"). Defaults to true.
    * @param {string} rootPath - optional root path for the output. Defaults to empty.
    * @param {string} pkgPath - path to 'package.json'. Defaults to './package.json'
    * @returns response from fs-extra 'copySync'
    */
-  copyToBuildPath(src, includeVersioning = true, rootPath = "", pkgPath = DEF_PKG_PATH) {
+  copyToBuildPath(src, includeSrcDir = false, includeVersioning = true, rootPath = "", pkgPath = DEF_PKG_PATH) {
 
     src = slash(src);
 
@@ -183,7 +184,7 @@ export class AppVersioner {
       srcPath = src.indexOf("/") === -1 ? src : src.slice( src.lastIndexOf("/") + 1 );
     } else if(fs.lstatSync(src).isDirectory()) {
       src = AppVersioner.removeTrailingSlash(src);
-      srcPath = src.slice( src.lastIndexOf("/") + 1 );
+      if(includeSrcDir) srcPath = src.slice( src.lastIndexOf("/") + 1 );
     }
 
     return fs.copySync(src, rootPath + this.getBuildPath(includeVersioning, false, pkgPath) + srcPath);

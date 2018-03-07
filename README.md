@@ -28,3 +28,8 @@ Or copy files after your production or development versioned folder like this
 ```
 appVersioner.copyToBuildPath("app.css");
 ```
+
+Or copy entire folders (pass true to 2nd parameter if you want to include the last folder - in this example "/js/" would be included in the output)
+```
+appVersioner.copyToBuildPath("dist/js/", true);
+```
