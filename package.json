@@ -1,6 +1,6 @@
 {
   "name": "app-versioner",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Helper for adding versioning to you app",
   "main": "dist/app-versioner.js",
   "scripts": {

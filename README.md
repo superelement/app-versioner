@@ -1,10 +1,10 @@
 # app-versioner
-Versioning helper for static assets
+Versioning helper for static assets. Useful for adding versioning (eg `dist/1-0-4/css/main.css`) to your output to make browser cache busting and version tracking easier.
 
 ## Example usage
 Configure SCSS variables for build path and environment in `_vars.scss` before you do a Sass build.
 ```
-const AppVersioner = require('./app-versioner/dist/app-versioner').AppVersioner;
+const AppVersioner = require('app-versioner').AppVersioner;
 
 const IS_PROD = process.env.NODE_ENV === "production";
 var appVersioner = new AppVersioner("/dev-environment/", "/prod-environment/", IS_PROD);
